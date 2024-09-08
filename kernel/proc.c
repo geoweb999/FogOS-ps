@@ -693,11 +693,22 @@ int
 getprocs(struct proc_data *pd, int max)
 {
   struct proc *p;
+  struct proc_data kpd[64];
   int count = 0;
 
   for(p = proc; p < &proc[NPROC]; p++) {
-    if(p->state != UNUSED)
-      count++;
+    if (p->state == UNUSED) {
+        continue;
+    }
+    if (count > max) {
+        break;
+    }
+    kpd[count].pid = p->pid;
+    kpd[count].ppid = p->parent ? p->parent->pid : 0;
+    kpd[count].state = p->state;
+    kpd[count].sz = p->sz;
+    safestrcpy(kpd[count].name, p->name, sizeof(kpd[count].name));
+    count++;
   }
 
   return count;
