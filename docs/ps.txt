@@ -1,0 +1,25 @@
+**ps** displays information about active processes. The initial version will display all processes: pid, parent pid, current state, memory size, and program name. Processes in UNUSED state will be ignored. The initial version will support a -h flag for program information.
+
+**Approach**: Update kernel as needed to introduce 22nd system call: getprocs and sys_getprocs. ps will pass a struct (ptable data) array pointer to the system call (getprocs). getprocs will iterate through all ptable entries where state != UNUSED and update the passed struct array pointer with ptable data via copyout. ps will output the returned ptable data in a nicely formatted manner. If the -h argument is used, ps will output simple help information and exit.
+
+**Files modified/added:*
+
+kernel:
+
+- syscall.c (sys_getprocs function declaration, update syscalls)
+- syscall.h (define SYS_getprocs 22)
+- sysproc.c (function sys_getprocs)
+- usys.S (add SYSCALL(getprocs))
+- proc.c (code for getprocs)
+- refs.h (function declaration)
+
+user:
+
+- user.h (add system call)
+- ps.c (new: call getprocs and output returned ptable data)
+- usys.pl
+
+Future Development
+
+- Add support for outputting command line (argv[0]) and arguments (argv[1..n]) instead of process name.
+- Add support for -t flag to output process information by parent/child in tree format
