@@ -23,5 +23,11 @@ int main (int argc, int **argv) {
     }
 
     printf("%d processes are running\n", tot);
+    printf("PID\tPPID\tSTATE\tSIZE\tNAME\n");
+
+    int i;
+    for (i = 0; i < tot; i++) {
+        printf("%d\t%d\t%d\t%d\t%s\n",pd[i].pid, pd[i].ppid, pd[i].state,pd[i].sz, pd[i].name);
+    }
     exit(0);
 }
