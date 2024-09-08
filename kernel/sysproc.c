@@ -93,5 +93,6 @@ sys_uptime(void)
 uint64
 sys_getprocs(void) {
     //TODO I think this call needs to validate args passed to getprocs
-    return 0;
+    //return 1;
+    return getprocs();
 }
