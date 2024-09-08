@@ -9,9 +9,9 @@ kernel:
 - syscall.c (sys_getprocs function declaration, update syscalls)
 - syscall.h (define SYS_getprocs 22)
 - sysproc.c (function sys_getprocs)
-- usys.S (add SYSCALL(getprocs))
 - proc.c (code for getprocs)
 - refs.h (function declaration)
+- usys.pl (add entry)
 
 user:
 
