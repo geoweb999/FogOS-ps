@@ -6,6 +6,7 @@
 
 // NPROC defined in param.h
 #define MAX_PROCS NPROC
+#define NELEM(x) (sizeof(x)/sizeof((x)[0]))
 
 
 struct proc_data {
@@ -17,6 +18,16 @@ struct proc_data {
 };
 
 int main (int argc, int **argv) {
+    // copied from procdump
+    static char *states[] = {
+    "unused",
+    "used",
+    "sleep ",
+    "runble",
+    "run   ",
+    "zombie"
+    };
+    char *state;
     struct proc_data pd[MAX_PROCS];
 
     int tot = getprocs(pd, MAX_PROCS);
@@ -30,7 +41,14 @@ int main (int argc, int **argv) {
 
     int i;
     for (i = 0; i < tot; i++) {
-        printf("%d\t%d\t%d\t%d\t%s\n",pd[i].pid, pd[i].ppid, pd[i].state,pd[i].sz, pd[i].name);
+        if(pd[i].state >= 0 && pd[i].state < NELEM(states) && states[pd[i].state]) {
+            state = states[pd[i].state];
+        }
+        else {
+            state = "???";
+        }
+        printf("%d\t%d\t%s\t%d\t%s\n", pd[i].pid, pd[i].ppid, state, pd[i].sz, pd[i].name);
+
     }
     exit(0);
 }

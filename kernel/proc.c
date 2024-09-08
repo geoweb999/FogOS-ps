@@ -706,7 +706,6 @@ getprocs(struct proc_data *pd, int max)
     tpd.sz = p->sz;
     safestrcpy(tpd.name, p->name, sizeof(tpd.name));
     copyout(myproc()->pagetable, (uint64)&pd[count], (char *)&tpd, sizeof(struct proc_data));
-    printf("%s\n", tpd.name);
     count++;
   }
 
