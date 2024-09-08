@@ -6,18 +6,17 @@
 
 kernel:
 
-- syscall.c (sys_getprocs function declaration, update syscalls)
-- syscall.h (define SYS_getprocs 22)
-- sysproc.c (function sys_getprocs)
-- proc.c (code for getprocs)
-- refs.h (function declaration)
-- usys.pl (add entry)
+- syscall.c (sys_getprocs function declaration, update syscalls) ✅
+- syscall.h (define SYS_getprocs 22) ✅
+- sysproc.c (function sys_getprocs) ✅
+- proc.c (code for getprocs) ✅
+- defs.h (function declaration)??? ✅
 
 user:
 
-- user.h (add system call)
-- ps.c (new: call getprocs and output returned ptable data)
-- usys.pl
+- user.h (add system call) ✅
+- ps.c (new: call getprocs and output returned ptable data) ✅
+- usys.pl ✅
 
 Future Development
 
