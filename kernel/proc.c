@@ -690,28 +690,26 @@ procdump(void)
 }
 
 int
-getprocs(struct proc_data **pd, int max)
+getprocs(struct proc_data *pd, int max)
 {
   struct proc *p;
-  struct proc_data kpd[NPROC];
+  struct proc_data tpd;
   int count = 0;
 
-  for(p = proc; p < &proc[NPROC]; p++) {
+  for(p = proc; p < &proc[NPROC] && count < max; p++) {
     if (p->state == UNUSED) {
         continue;
     }
-    if (count > max) {
-        break;
-    }
-    kpd[count].pid = p->pid;
-    kpd[count].ppid = p->parent ? p->parent->pid : 0;
-    kpd[count].state = p->state;
-    kpd[count].sz = p->sz;
-    safestrcpy(kpd[count].name, p->name, sizeof(kpd[count].name));
-    printf("%s\n", kpd[count].name);
+    tpd.pid = p->pid;
+    tpd.ppid = p->parent ? p->parent->pid : 0;
+    tpd.state = p->state;
+    tpd.sz = p->sz;
+    safestrcpy(tpd.name, p->name, sizeof(tpd.name));
+    copyout(p->pagetable, (uint64)&pd[count], (char *)&tpd, sizeof(struct proc_data));
+    printf("%s\n", tpd.name);
     count++;
   }
-  copyout(p->pagetable, (uint64)&pd, (char *)kpd, max * sizeof(struct proc_data));
+  //copyout(p->pagetable, (uint64)&pd, (char *)kpd, max * sizeof(struct proc_data));
 
   return count;
 }

@@ -100,5 +100,5 @@ sys_getprocs(void) {
 
     argaddr(0, (uint64 *)&pd);
     argint(1, &max);
-    return getprocs(&pd, max);
+    return getprocs(pd, max);
 }
