@@ -1,9 +1,12 @@
 #include "kernel/types.h"
 #include "kernel/stat.h"
 #include "kernel/fcntl.h"
+#include "kernel/param.h"
 #include "user/user.h"
 
-#define MAX_PROCS 64
+// NPROC defined in param.h
+#define MAX_PROCS NPROC
+
 
 struct proc_data {
   int  pid;

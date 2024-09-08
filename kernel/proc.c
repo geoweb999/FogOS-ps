@@ -690,10 +690,10 @@ procdump(void)
 }
 
 int
-getprocs(struct proc_data *pd, int max)
+getprocs(struct proc_data **pd, int max)
 {
   struct proc *p;
-  struct proc_data kpd[64];
+  struct proc_data kpd[NPROC];
   int count = 0;
 
   for(p = proc; p < &proc[NPROC]; p++) {
@@ -708,9 +708,10 @@ getprocs(struct proc_data *pd, int max)
     kpd[count].state = p->state;
     kpd[count].sz = p->sz;
     safestrcpy(kpd[count].name, p->name, sizeof(kpd[count].name));
+    printf("%s\n", kpd[count].name);
     count++;
   }
-  copyout(p->pagetable, (uint64)&pd, (char *)kpd, count * sizeof(struct proc_data));
+  copyout(p->pagetable, (uint64)&pd, (char *)kpd, max * sizeof(struct proc_data));
 
   return count;
 }
