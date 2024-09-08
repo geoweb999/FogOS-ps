@@ -710,6 +710,7 @@ getprocs(struct proc_data *pd, int max)
     safestrcpy(kpd[count].name, p->name, sizeof(kpd[count].name));
     count++;
   }
+  copyout(p->pagetable, (uint64)&pd, (char *)kpd, count * sizeof(struct proc_data));
 
   return count;
 }
