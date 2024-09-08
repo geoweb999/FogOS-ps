@@ -105,3 +105,12 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
 };
+
+// procstate data used by getprocs
+struct proc_data {
+  int pid;
+  int ppid;
+  int state;
+  uint sz;
+  char name[16];
+};

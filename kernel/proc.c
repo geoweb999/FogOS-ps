@@ -690,7 +690,7 @@ procdump(void)
 }
 
 int
-getprocs(void)
+getprocs(struct proc_data *pd, int max)
 {
   struct proc *p;
   int count = 0;

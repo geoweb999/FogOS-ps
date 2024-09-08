@@ -93,6 +93,12 @@ sys_uptime(void)
 uint64
 sys_getprocs(void) {
     //TODO I think this call needs to validate args passed to getprocs
-    //return 1;
-    return getprocs();
+    struct proc_data *pd;
+    int max;
+
+    //argaddr(int n, uint64 *ip)
+
+    argaddr(0, (uint64 *)&pd);
+    argint(1, &max);
+    return getprocs(pd, max);
 }
