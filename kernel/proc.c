@@ -696,6 +696,10 @@ getprocs(struct proc_data *pd, int max)
   struct proc_data tpd;
   int count = 0;
 
+  if (!pd || max <= 0) {
+      return -1;
+  }
+
   for(p = proc; p < &proc[NPROC] && count < max; p++) {
     if (p->state == UNUSED) {
         continue;
