@@ -15,7 +15,7 @@ kernel:
 user:
 
 - user.h (add system call) ✅
-- ps.c (new: call getprocs and output returned ptable data) ✅ (only returns number of non-UNUSED entries in proc table for now)
+- ps.c (new: call getprocs and output returned ptable data) ✅ 
 - usys.pl ✅
 
 Future Development
