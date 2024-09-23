@@ -17,7 +17,7 @@ struct proc_data {
   char name[16];
 };
 
-int main (int argc, int **argv) {
+int main (int argc, char *argv[]) {
     // copied from procdump
     static char *states[] = {
     "unused",
@@ -29,6 +29,16 @@ int main (int argc, int **argv) {
     };
     char *state;
     struct proc_data pd[MAX_PROCS];
+
+    if(argc == 2 && strcmp(argv[1], "-h") == 0){
+        printf("ps -- report process status\n");
+        printf("usage: ps [-h]\n");
+        printf("-h: print this helpful information\n");
+        exit(0);
+    } else if (argc == 2) {
+        printf("Invalid parameter, ps -h for help\n");
+        exit(1);
+    }
 
     int tot = getprocs(pd, MAX_PROCS);
     if (tot < 0) {
