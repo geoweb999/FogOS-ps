@@ -1,22 +1,49 @@
-**ps** displays information about active processes. The initial version will display all processes: pid, parent pid, current state, memory size, and program name. Processes in UNUSED state will be ignored. The initial version will support a -h flag for program information.
+PS(1) User Commands
 
-**Approach**: Update kernel as needed to introduce 22nd system call: getprocs and sys_getprocs. ps will pass a struct (ptable data) array pointer to the system call (getprocs). getprocs will iterate through all ptable entries where state != UNUSED and update the passed struct array pointer with ptable data via copyout. ps will output the returned ptable data in a nicely formatted manner. If the -h argument is used, ps will output simple help information and exit.
+NAME 
+ps - report process status
 
-**Files modified/added:*
+SYNOPSIS 
+ps
 
-kernel:
+DESCRIPTION
+The ps command displays information about active processes in the system.
 
-- syscall.c (sys_getprocs function declaration, update syscalls) ✅
-- syscall.h (define SYS_getprocs 22) ✅
-- sysproc.c (function sys_getprocs) ✅
-- proc.c (code for getprocs) ✅
-- defs.h (function declaration)??? ✅
+OUTPUT
+For each process, the following information is displayed:
 
-user:
+PID: Process ID
+PPID: Parent Process ID
+STATE: Current state of the process
+SIZE: Size of the process in bytes
+NAME: Name of the process
 
-- user.h (add system call) ✅
-- ps.c (new: call getprocs and output returned ptable data) ✅ 
-- usys.pl ✅
+The STATE field can have one of the following values:
+unused
+used
+sleep
+runble (runnable)
+run
+zombie
+
+EXIT STATUS
+The ps command exits 0 on success, and 1 if an error occurs.
+
+NOTES
+This implementation of ps uses the getprocs() system call to retrieve process information. It can display information for up to NPROC processes (defined in param.h).
+
+EXAMPLES
+To display information about all processes:
+$ ps
+
+SEE ALSO
+getprocs(2)
+
+BUGS
+None known.
+
+AUTHOR
+Geoffrey Weber
 
 Future Development
 
