@@ -1,51 +1,64 @@
-PS(1) User Commands
+# PS(1) User Commands PS(1)
 
-NAME 
+## NAME
 ps - report process status
 
-SYNOPSIS 
-ps
+## SYNOPSIS
+```
+ps [-h]
+```
 
-DESCRIPTION
-The ps command displays information about active processes in the system.
+## DESCRIPTION
+The `ps` utility displays information about active processes in the system. Without any options, it shows a list of all processes including their PID, PPID, state, size, and name.
 
-OUTPUT
-For each process, the following information is displayed:
+## OPTIONS
+-h
+: Display help information and exit.
 
-PID: Process ID
-PPID: Parent Process ID
-STATE: Current state of the process
-SIZE: Size of the process in bytes
-NAME: Name of the process
+## OUTPUT
+The `ps` command displays the following information for each process:
 
-The STATE field can have one of the following values:
-unused
-used
-sleep
-runble (runnable)
-run
-zombie
+PID
+: The process ID.
 
-EXIT STATUS
-The ps command exits 0 on success, and 1 if an error occurs.
+PPID
+: The parent process ID.
 
-NOTES
-This implementation of ps uses the getprocs() system call to retrieve process information. It can display information for up to NPROC processes (defined in param.h).
+STATE
+: The current state of the process. Possible states are:
+  - unused: Process slot is not in use
+  - used: Process is allocated but not fully initialized
+  - sleep: Process is sleeping
+  - runble: Process is ready to run
+  - run: Process is currently running
+  - zombie: Process has terminated but not yet been cleaned up
 
-EXAMPLES
+SIZE
+: The size of the process memory in bytes.
+
+NAME
+: The name of the process.
+
+## EXIT STATUS
+The `ps` utility exits 0 on success, and 1 if an error occurs.
+
+## EXAMPLES
 To display information about all processes:
+```
 $ ps
+```
 
-SEE ALSO
-getprocs(2)
+To display help information:
+```
+$ ps -h
+```
 
-BUGS
-None known.
+## NOTES
+- The `ps` command relies on the `getprocs` system call to retrieve process information.
+- The maximum number of processes that can be displayed is limited by the `NPROC` constant defined in the system.
 
-AUTHOR
-Geoffrey Weber
+## SEE ALSO
+getprocs(2), fork(2), exec(2)
 
-Future Development
-
-- Add support for outputting command line (argv[0]) and arguments (argv[1..n]) instead of process name.
-- Add support for -t flag to output process information by parent/child in tree format
+## BUGS
+If an invalid state is encountered, it will be displayed as "???".
