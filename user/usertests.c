@@ -2571,6 +2571,65 @@ badarg(char *s)
   exit(0);
 }
 
+// test to make sure getprocs returns the right number of procs
+  struct proc_data {
+    int  pid;
+    int  ppid;
+    int  state;
+    int  sz;
+    char name[16];
+  };
+
+void
+getprocstest(char *s)
+{
+  struct proc_data pd_array[NPROC];
+
+  int tot_procs = getprocs(pd_array, NPROC);
+  printf("%s: getprocs test1 returned %d procs\n", s, tot_procs);  
+  if(tot_procs < 0){
+    printf("%s: getprocs test1 failed\n", s);
+    exit(1);
+  }
+
+  if (tot_procs != 4) {
+    printf("%s: invalid results for getprocs test1, expected 4 procs received %d\n", s, tot_procs);  
+    exit(1);
+  }
+
+  tot_procs = getprocs(pd_array, 1); // test to find 1 proc
+  printf("%s: getprocs test2 returned %d procs\n", s, tot_procs);
+  if(tot_procs < 0){
+    printf("%s: getprocs test2 failed\n", s);
+    exit(1);
+  }
+
+  if (tot_procs != 1) {
+    printf("%s: invalid results for getprocs test1, expected 1 procs received %d\n", s, tot_procs);
+    exit(1);
+  }
+
+  tot_procs = getprocs(pd_array, NPROC + 1);
+  printf("%s: getprocs test3 returned %d procs\n", s, tot_procs);
+  if(tot_procs < 0){
+    printf("%s: getprocs test3 failed\n", s);
+    exit(1);
+  }
+
+  if (tot_procs != 4) {
+    printf("%s: invalid results for getprocs test3, expected 4 procs received %d\n", s, tot_procs);
+    exit(1);
+  }
+
+  tot_procs = getprocs(pd_array, 0);
+  if (tot_procs >= 0) {
+      printf("%s: invalid results for getprocs test4, expected error received %d\n", s, tot_procs);
+      exit(1);
+  }
+
+  printf("%s: getprocs test OK\n", s); 
+}
+
 struct test {
   void (*f)(char *);
   char *s;
@@ -2635,6 +2694,7 @@ struct test {
   {sbrklast, "sbrklast"},
   {sbrk8000, "sbrk8000"},
   {badarg, "badarg" },
+  {getprocstest, "getprocstest"},
 
   { 0, 0},
 };

@@ -700,6 +700,8 @@ getprocs(struct proc_data *pd, int max)
       return -1;
   }
 
+  max = (max > NPROC) ? NPROC : max;
+
   for(p = proc; p < &proc[NPROC] && count < max; p++) {
     if (p->state == UNUSED) {
         continue;
