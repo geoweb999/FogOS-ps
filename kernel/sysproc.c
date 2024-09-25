@@ -92,12 +92,21 @@ sys_uptime(void)
 
 uint64
 sys_getprocs(void) {
-    //TODO I think this call needs to validate args passed to getprocs
+ /**
+ * Retrieves information about running processes and stores it in an array.
+ *
+ * @param pd   Pointer to an array of proc_data structures where process information will be stored.
+ *             arg[0] retrieved via argaddr
+ *
+ * @param max  Maximum number of processes to retrieve information for.
+ *             arg[1] retrieved via agrint
+ *
+ * @return     The number of processes for which information was retrieved, or -1 if input parameters are invalid.
+ *
+ */
+int
     struct proc_data *pd;
     int max;
-
-    //argaddr(int n, uint64 *ip)
-
     argaddr(0, (uint64 *)&pd);
     argint(1, &max);
     return getprocs(pd, max);
