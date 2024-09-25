@@ -1,3 +1,11 @@
+/**
+ * @file ps.c
+ * @brief Implementation of a simple 'ps' command for xv6.
+ *
+ * This program reports the status of processes in the system.
+ * -h for minimal help
+ */
+
 #include "kernel/types.h"
 #include "kernel/stat.h"
 #include "kernel/fcntl.h"

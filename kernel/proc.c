@@ -691,6 +691,29 @@ procdump(void)
 
 int
 getprocs(struct proc_data *pd, int max)
+ /**
+ * Retrieves information about running processes and stores it in an array.
+ *
+ * @param pd   Pointer to an array of proc_data structures where process information will be stored.
+ * @param max  Maximum number of processes to retrieve information for.
+ *
+ * @return     The number of processes for which information was retrieved, or -1 if input parameters are invalid.
+ *
+ * @details    This function iterates through the process table and collects information about
+ *             running processes. It stores this information in the provided array of proc_data
+ *             structures. The function will retrieve information for up to 'max' processes or
+ *             until it reaches the end of the process table (NPROC), whichever comes first.
+ *
+ * @note       The function uses copyout to safely copy data to user space.
+ *
+ * @warning    This function assumes that the caller has allocated sufficient memory for the
+ *             proc_data array to hold information for 'max' processes.
+ */
+int
+getprocs(struct proc_data *pd, int max)
+{
+    // Function implementation...
+}
 {
   struct proc *p;
   struct proc_data tpd;
