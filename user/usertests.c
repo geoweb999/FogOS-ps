@@ -2605,7 +2605,7 @@ getprocstest(char *s)
   }
 
   if (tot_procs != 1) {
-    printf("%s: invalid results for getprocs test1, expected 1 procs received %d\n", s, tot_procs);
+    printf("%s: invalid results for getprocs test2, expected 1 procs received %d\n", s, tot_procs);
     exit(1);
   }
 
