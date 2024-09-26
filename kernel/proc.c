@@ -708,12 +708,7 @@ getprocs(struct proc_data *pd, int max)
  *
  * @warning    This function assumes that the caller has allocated sufficient memory for the
  *             proc_data array to hold information for 'max' processes.
- */
-int
-getprocs(struct proc_data *pd, int max)
-{
-    // Function implementation...
-}
+ **/
 {
   struct proc *p;
   struct proc_data tpd;

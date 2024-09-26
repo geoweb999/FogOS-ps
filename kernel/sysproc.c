@@ -104,7 +104,6 @@ sys_getprocs(void) {
  * @return     The number of processes for which information was retrieved, or -1 if input parameters are invalid.
  *
  */
-int
     struct proc_data *pd;
     int max;
     argaddr(0, (uint64 *)&pd);
